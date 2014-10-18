@@ -21,8 +21,7 @@ db = {}
 def foo():
     client = TwilioRestClient(os.environ.get('TWILIO_ACCOUNT_SID', None), os.environ.get('TWILIO_AUTH_TOKEN', None))
     print(time.ctime())
-    message = client.messages.create(to="+17034590011", from_="+14088053907",
-                                     body="Hello there!")
+    #message = client.messages.create(to="+17034590011", from_="+14088053907", body="Hello there!")
     threading.Timer(10, foo).start()
 
 foo()
