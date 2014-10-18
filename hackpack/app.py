@@ -26,8 +26,11 @@ def voice():
 @app.route('/sms', methods=['GET', 'POST'])
 def sms():
     response = twiml.Response()
-    response.sms("Congratulations! You deployed the Twilio Hackpack "
-                 "for Heroku and Flask.")
+    body = request.form['Body']
+    if body == "reg":
+        response.sms("TURN DOWN FOR WHAT")
+    else:
+        response.sms("YOU FAILED")
     return str(response)
 
 
