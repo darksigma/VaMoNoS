@@ -1,4 +1,6 @@
 import re
+import time, threading
+import os
 
 from flask import Flask
 from flask import render_template
@@ -7,6 +9,7 @@ from flask import request
 
 from twilio import twiml
 from twilio.util import TwilioCapability
+from twilio.rest import TwilioRestClient
 import datetime
 
 # Declare and configure application
@@ -14,6 +17,15 @@ app = Flask(__name__, static_url_path='/static')
 app.config.from_pyfile('local_settings.py')
 
 db = {}
+
+def foo():
+    client = TwilioRestClient(os.environ.get('TWILIO_ACCOUNT_SID', None), os.environ.get('TWILIO_AUTH_TOKEN', None))
+    print(time.ctime())
+    message = client.messages.create(to="+17034590011", from_="+14088053907",
+                                     body="Hello there!")
+    threading.Timer(10, foo).start()
+
+foo()
 
 # Voice Request URL
 @app.route('/voice', methods=['GET', 'POST'])
