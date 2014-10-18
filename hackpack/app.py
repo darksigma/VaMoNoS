@@ -28,7 +28,8 @@ def voice():
 @app.route('/sms', methods=['GET', 'POST'])
 def sms():
     response = twiml.Response()
-    from_number = request.values.get('From', None)
+    #from_number = request.values.get('From', None)
+    from_number = "test"
     body = request.form['Body']
     reg = re.compile('[r|R]eg name:[\s|\S]+ dob:[\s|\S]+ zipcode:[\s|\S]+')
     if reg.matches(body) is not None:
