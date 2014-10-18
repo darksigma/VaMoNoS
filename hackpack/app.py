@@ -52,6 +52,7 @@ def sms():
                 "hepb2":0,
                 "hepb3":0,
             }
+            response.sms("User created")
     else:
         response.sms("Error: Ill-formed Submission")
         
