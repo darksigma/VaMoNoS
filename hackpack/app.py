@@ -11,6 +11,7 @@ from twilio import twiml
 from twilio.util import TwilioCapability
 from twilio.rest import TwilioRestClient
 import datetime
+import helper
 
 # Declare and configure application
 app = Flask(__name__, static_url_path='/static')
@@ -99,7 +100,7 @@ def sms():
                 "hpv2":0,
                 "hpv3":0,
             }
-            response.sms("User created")
+            response.sms(helper.confirmationMsg(name, dob, zipcode))
     else:
         response.sms("Error: Ill-formed Submission")
         
