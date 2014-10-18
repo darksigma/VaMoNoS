@@ -7,11 +7,13 @@ from flask import request
 
 from twilio import twiml
 from twilio.util import TwilioCapability
+import datetime
 
 # Declare and configure application
 app = Flask(__name__, static_url_path='/static')
 app.config.from_pyfile('local_settings.py')
 
+db = {}
 
 # Voice Request URL
 @app.route('/voice', methods=['GET', 'POST'])
@@ -26,11 +28,33 @@ def voice():
 @app.route('/sms', methods=['GET', 'POST'])
 def sms():
     response = twiml.Response()
+    from_number = request.values.get('From', None)
     body = request.form['Body']
-    if body == "reg":
-        response.sms("TURN DOWN FOR WHAT")
+    reg = re.compile('[r|R]eg name:[\s|\S]+ dob:[\s|\S]+ zipcode:[\s|\S]+')
+    if reg.matches(body) is not None:
+        if from_number in db:
+            response.sms("User already exists!")
+        else:
+            input = re.split(' name:| dob:| zipcode:', body)
+            name = input[1]
+            dobarray = input[2].split('/')
+            month = dobarray[0]
+            day = dobarray[1]
+            year = dobarray[2]
+            dob = datetime.datetime(year, month, day)
+            zipcode = input[3]
+            db[from_number] = {
+                "name":name,
+                "dob":dob,
+                "zipcode":zipcode,
+                "bcg":0,
+                "hepb1":0,
+                "hepb2":0,
+                "hepb3":0,
+            }
     else:
-        response.sms("YOU FAILED")
+        response.sms("Error: Ill-formed Submission")
+        
     return str(response)
 
 
