@@ -42,7 +42,7 @@ def sms():
             month = dobarray[0]
             day = dobarray[1]
             year = dobarray[2]
-            dob = datetime.datetime(year, month, day)
+            dob = datetime.datetime(int(year), int(month), int(day))
             zipcode = input[3]
             db[from_number] = {
                 "name":name,
