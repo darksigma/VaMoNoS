@@ -1,6 +1,6 @@
 # VaMoNos - Vaccination Monitoring and Notification Service
 
-This is our submission to Hacking Pediatrics! You can find a demo [here!](https://www.youtube.com/watch?v=JGNLnXBIz4Q)
+This is our submission to Hacking Pediatrics! You can find a demo [here](https://www.youtube.com/watch?v=JGNLnXBIz4Q)!
 
 ## Need
 In developing nations, many people aren't able to keep track of their child's immunizations. Hard copies of records are easily lost and there is no centralized location to retrieve this information. Moreover, there is little incentive to get children immunized when it is at the cost of losing hours in the workday when they could otherwise be earning money for their family.
