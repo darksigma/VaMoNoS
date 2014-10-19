@@ -116,8 +116,11 @@ def sms():
     elif from_number not in db:
         response.sms("Please register first!")
     elif body in vaccineCode:
-        db[from_number][vaccineCode[body]] = 1
-        response.sms(helper.responseFromVaccine(vaccineCode[body])) 
+        if db[from_number][vaccineCode[body]] == 1:
+            response.sms("Already received vaccine!")
+        else:
+            db[from_number][vaccineCode[body]] = 1
+            response.sms(helper.responseFromVaccine(vaccineCode[body])) 
     else:
         response.sms("Error: Ill-formed Submission")
         
