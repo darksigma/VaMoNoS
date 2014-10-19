@@ -212,7 +212,7 @@ def sms():
             response.sms(helper.responseFromVaccine(vaccineCode[body])) 
     
     elif body == "record":
-        response.sms(helper.info(db[from_number], vaccineTimes, dob))
+        response.sms(helper.info(db[from_number], vaccineTimes))
 
     else:
         response.sms("Error: Ill-formed Submission")
