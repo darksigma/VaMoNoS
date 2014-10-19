@@ -19,51 +19,51 @@ app.config.from_pyfile('local_settings.py')
 
 db = {}
 
+    "pcv4":0,
 db["+16172099765"] = {
-                "name":"Santa Claus",
-                "dob":datetime.datetime(2014, 7, 05),
-                "zipcode":"02139",
-                "bcg":1,
-                "hepb1":1,
-                "hepb2":1,
-                "hepb3":0,
-                "polio1":1,
-                "polio2":1,
-                "polio3":1,
-                "polio4":0,
-                "polio5":0,
-                "polio6":0,
-                "polio7":0,
-                "polio8":0,
-                "dtp1":0,
-                "dtp2":0,
-                "dtp3":0,
-                "dtp4":0,
-                "dtp5":0,
-                "tdap":0,
-                "hib1":0,
-                "hib2":0,
-                "hib3":0,
-                "hib4":0,
-                "pcv1":1,
-                "pcv2":1,
-                "pcv3":0,
-                "pcv4":0,
-                "rv1":1,
-                "rv2":1,
-                "rv3":0,
-                "measles":0,
-                "mmr1":0,
-                "mmr2":0,
-                "var1":0,
-                "var2":0,
-                "hepa1":0,
-                "hepa2":0,
-                "typhoid":0,
-                "hpv1":0,
-                "hpv2":0,
-                "hpv3":0,
-            }
+    "name":"Santa Claus",
+    "dob":datetime.datetime(2014, 7, 05),
+    "zipcode":"02139",
+    "bcg":1,
+    "hepb1":1,
+    "hepb2":1,
+    "hepb3":0,
+    "polio1":1,
+    "polio2":1,
+    "polio3":1,
+    "polio4":0,
+    "polio5":0,
+    "polio6":0,
+    "polio7":0,
+    "polio8":0,
+    "dtp1":0,
+    "dtp2":0,
+    "dtp3":0,
+    "dtp4":0,
+    "dtp5":0,
+    "tdap":0,
+    "hib1":0,
+    "hib2":0,
+    "hib3":0,
+    "hib4":0,
+    "pcv1":1,
+    "pcv2":1,
+    "pcv3":0,
+    "rv1":1,
+    "rv2":1,
+    "rv3":0,
+    "measles":0,
+    "mmr1":0,
+    "mmr2":0,
+    "var1":0,
+    "var2":0,
+    "hepa1":0,
+    "hepa2":0,
+    "typhoid":0,
+    "hpv1":0,
+    "hpv2":0,
+    "hpv3":0,
+}
 
 vaccineCode = {
     "9e4f":"bcg",
@@ -74,8 +74,50 @@ vaccineCode = {
     "u0sv":"polio2",
     "26s2":"dtp1",
     "qe10":"dtp2",
-    }
+}
 
+vaccineTimes = {
+    "bcg":datetime.timedelta(days = 0),
+    "hepb1":datetime.timedelta(days = 0),
+    "hepb2":datetime.timedelta(days = 45),
+    "hepb3":datetime.timedelta(days = 185),
+    "polio1":datetime.timedelta(days = 0),
+    "polio2":datetime.timedelta(days = 45),
+    "polio3":datetime.timedelta(days = 70),
+    "polio4":datetime.timedelta(days = 100),
+    "polio5":datetime.timedelta(days = 185),
+    "polio6":datetime.timedelta(days = 275),
+    "polio7":datetime.timedelta(days = 365),
+    "polio8":datetime.timedelta(days = 1460),
+    "dtp1":datetime.timedelta(days = 45),
+    "dtp2":datetime.timedelta(days = 70),
+    "dtp3":datetime.timedelta(days = 100),
+    "dtp4":datetime.timedelta(days = 455),
+    "dtp5":datetime.timedelta(days = 1460),
+    "tdap":datetime.timedelta(days = 4015),
+    "hib1":datetime.timedelta(days = 45),
+    "hib2":datetime.timedelta(days = 70),
+    "hib3":datetime.timedelta(days = 100),
+    "hib4":datetime.timedelta(days = 365),
+    "pcv1":datetime.timedelta(days = 45),
+    "pcv2":datetime.timedelta(days = 70),
+    "pcv3":datetime.timedelta(days = 100),
+    "pcv4":datetime.timedelta(days = 365),
+    "rv1":datetime.timedelta(days = 45),
+    "rv2":datetime.timedelta(days = 70),
+    "rv3":datetime.timedelta(days = 100),
+    "measles":datetime.timedelta(days = 270),
+    "mmr1":datetime.timedelta(days = 365),
+    "mmr2":datetime.timedelta(days = 1460),
+    "var1":datetime.timedelta(days = 455),
+    "var2":datetime.timedelta(days = 1460),
+    "hepa1":datetime.timedelta(days = 365),
+    "hepa2":datetime.timedelta(days = 365),
+    "typhoid":datetime.timedelta(days = 730),
+    "hpv1":datetime.timedelta(days = 4015),
+    "hpv2":datetime.timedelta(days = 4015),
+    "hpv3":datetime.timedelta(days = 4015),
+}
 
 def foo():
     client = TwilioRestClient(os.environ.get('TWILIO_ACCOUNT_SID', None), os.environ.get('TWILIO_AUTH_TOKEN', None))
@@ -162,14 +204,18 @@ def sms():
     elif from_number not in db:
         response.sms("Please register first!")
     elif body in vaccineCode:
-        if db[from_number][vaccineCode[body]] == 1:
+        if db[from_number][vaccineCode[body]] != 0:
             response.sms("Already received vaccine!")
         else:
-            db[from_number][vaccineCode[body]] = 1
+            db[from_number][vaccineCode[body]] = datetime.datetime.now()
             response.sms(helper.responseFromVaccine(vaccineCode[body])) 
+    
+    elif body == "info":
+        response.sms(helper.info(db[from_number], vaccineTimes, dob))
+
     else:
         response.sms("Error: Ill-formed Submission")
-        
+     
     return str(response)
 
 
