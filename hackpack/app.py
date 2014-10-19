@@ -133,7 +133,7 @@ def foo():
                 body += need.upper() + ", "
             body = body[:-2]
             message = client.messages.create(to=number, from_="+14088053907", body=body)
-    threading.Timer(86400, foo).start()
+    threading.Timer(7*86400, foo).start()
 
 foo()
 

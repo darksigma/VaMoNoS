@@ -15,4 +15,4 @@ At this point, the parents will be able to:
  2. text `send +12394956789` to send their child's record to a third party using TigerText with one view restrictions and a 30-day expiration date (the number listed should be repaced with the intended recipient's number) 
  3. text an immunization code they would receive from their healthcare provider to update their record and receive free minutes as an incentive for immunizing their child. 
 
-Moreover, we implement a notification service that notifies the parent via text message whenever their child is due for a vaccination. This reminder is sent daily to the parent to make sure they get their child immunized. 
+Moreover, we implement a notification service that notifies the parent via text message whenever their child is due for a vaccination. This reminder is sent weekly to the parent to make sure they get their child immunized. 
