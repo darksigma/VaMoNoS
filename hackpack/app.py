@@ -144,7 +144,7 @@ def sms():
     from_number = request.values.get('From', None)
     body = request.form['Body']
     reg = re.compile('[r|R]eg name:[\s|\S]+ dob:[\s|\S]+ zipcode:[\s|\S]+')
-    send = re.compile('[s|S]end +\d\d\d\d\d\d\d\d\d\d\d')
+    send = re.compile('[s|S]end \+\d\d\d\d\d\d\d\d\d\d\d')
     if reg.match(body) is not None:
         if from_number in db:
             response.sms("User already exists!")
