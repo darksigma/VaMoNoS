@@ -73,6 +73,12 @@ vaccineCode = {
     "eijl":"hepb3",
     "q52y":"polio1",
     "u0sv":"polio2",
+    "38fk":"polio3",
+    "29hk":"polio4",
+    "sbcm":"polio5",
+    "q08m":"polio6",
+    "mvii":"polio7",
+    "18fj":"polio8",
     "26s2":"dtp1",
     "qe11":"dtp2",
 }
