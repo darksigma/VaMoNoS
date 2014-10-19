@@ -132,7 +132,7 @@ def foo():
             for need in needed:
                 body += need.upper() + ", "
             body = body[:-2]
-            message = client.messages.create(to="+17034590011", from_="+14088053907", body=body)
+            message = client.messages.create(to=number, from_="+14088053907", body=body)
     threading.Timer(10, foo).start()
 
 foo()
