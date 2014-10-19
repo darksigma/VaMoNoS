@@ -221,11 +221,11 @@ def sms():
             db[from_number][vaccineCode[body]] = datetime.datetime.now()
             response.sms(helper.responseFromVaccine(vaccineCode[body])) 
     
-    elif body == "record":
+    elif body == "record" or body =="Record":
         response.sms(helper.info(db[from_number], vaccineTimes))
     elif send.match(body) is not None:
         inputs = body.split('+')
-        args = ['curl', '-u', 'zD93Tl5vChhg63gpeRLF8JiSvVBCaKEk:AZmEit4I6WQQ19y5QCHWyOVjU5VV2JrpdPtqaIXc4R8In0xQ', '-vX', 'POST', 'https://api.tigertext.me/v1/message', '--data-urlencode', 'recipient=+' + str(inputs[1]), '--data', 'body=' + helper.info(db[from_number], vaccineTimes), '--data', 'ttl=7200']
+        args = ['curl', '-u', 'zD93Tl5vChhg63gpeRLF8JiSvVBCaKEk:AZmEit4I6WQQ19y5QCHWyOVjU5VV2JrpdPtqaIXc4R8In0xQ', '-vX', 'POST', 'https://api.tigertext.me/v1/message', '--data-urlencode', 'recipient=+' + str(inputs[1]), '--data', 'body=' + helper.sendInfo(db[from_number], vaccineTimes, db[from_number]["name"]), '--data', 'ttl=7200']
         subprocess.call(args)
 
     else:
