@@ -211,7 +211,7 @@ def sms():
             db[from_number][vaccineCode[body]] = datetime.datetime.now()
             response.sms(helper.responseFromVaccine(vaccineCode[body])) 
     
-    elif body == "info":
+    elif body == "record":
         response.sms(helper.info(db[from_number], vaccineTimes, dob))
 
     else:
