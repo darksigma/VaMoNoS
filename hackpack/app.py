@@ -113,9 +113,11 @@ def sms():
                 "hpv3":0,
             }
             response.sms(helper.confirmationMsg(name, dob, zipcode))
+    elif from_number not in db:
+        response.sms("Please register first!")
     elif body in vaccineCode:
         db[from_number][vaccineCode[body]] = 1
-        response.sms(responseFromVaccine(vaccineCode[body])) 
+        response.sms(helper.responseFromVaccine(vaccineCode[body])) 
     else:
         response.sms("Error: Ill-formed Submission")
         
