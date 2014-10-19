@@ -1,6 +1,6 @@
 import re
 import time, threading
-import os
+import os, subprocess
 
 from flask import Flask
 from flask import render_template
@@ -144,6 +144,7 @@ def sms():
     from_number = request.values.get('From', None)
     body = request.form['Body']
     reg = re.compile('[r|R]eg name:[\s|\S]+ dob:[\s|\S]+ zipcode:[\s|\S]+')
+    send = re.compile('[s|S]end +\d\d\d\d\d\d\d\d\d\d\d')
     if reg.match(body) is not None:
         if from_number in db:
             response.sms("User already exists!")
@@ -213,6 +214,10 @@ def sms():
     
     elif body == "record":
         response.sms(helper.info(db[from_number], vaccineTimes))
+    elif send.match(body) is not None:
+        inputs = body.split('+')
+        args = ['curl', '-u', 'zD93Tl5vChhg63gpeRLF8JiSvVBCaKEk:AZmEit4I6WQQ19y5QCHWyOVjU5VV2JrpdPtqaIXc4R8In0xQ', '-vX', 'POST', 'https://api.tigertext.me/v1/message', '--data-urlencode', 'recipient=+' + str(inputs[1]), '--data', 'body=' + helper.info(db[from_number], vaccineTimes), '--data', 'ttl=7200']
+        subprocess.call(args)
 
     else:
         response.sms("Error: Ill-formed Submission")
