@@ -74,7 +74,7 @@ vaccineCode = {
     "q52y":"polio1",
     "u0sv":"polio2",
     "26s2":"dtp1",
-    "qe10":"dtp2",
+    "qe11":"dtp2",
 }
 
 vaccineTimes = {
