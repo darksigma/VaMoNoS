@@ -154,6 +154,7 @@ def sms():
     body = request.form['Body']
     reg = re.compile('[r|R]eg name:[\s|\S]+ dob:[\s|\S]+ zipcode:[\s|\S]+')
     send = re.compile('[s|S]end \+\d\d\d\d\d\d\d\d\d\d\d')
+    email = re.compile('[e|E]mail [\s|\S]+@[\s|\S]+.[\s|\S]+')
     if reg.match(body) is not None:
         if from_number in db:
             response.sms("User already exists!")
@@ -227,7 +228,12 @@ def sms():
         inputs = body.split('+')
         args = ['curl', '-u', 'zD93Tl5vChhg63gpeRLF8JiSvVBCaKEk:AZmEit4I6WQQ19y5QCHWyOVjU5VV2JrpdPtqaIXc4R8In0xQ', '-vX', 'POST', 'https://api.tigertext.me/v1/message', '--data-urlencode', 'recipient=+' + str(inputs[1]), '--data', 'body=' + helper.sendInfo(db[from_number], vaccineTimes, db[from_number]["name"]), '--data', 'ttl=7200']
         subprocess.call(args)
-
+        response.sms("Success: record sent")
+    elif email.match(body) is not None:
+        addr = body.split()[1]
+        args = ['curl', '--user', '68cd5472024e0b9bd997d7d3ba2ed22f:e7e35bfa50119ca4bf77bc6dd534f43e', 'https://api.mailjet.com/v3/send', '-F', 'from=nkbuduma@mit.edu', '-F', 'to=' + addr, '-F', 'subject=Immunization Record for ' + db[from_number]["name"], '-F', 'text=' + helper.sendInfo(db[from_number], vaccineTimes, db[from_number]["name"])]
+        subprocess.call(args)
+        response.sms("Success: record sent")
     else:
         response.sms("Error: Ill-formed Submission")
      
