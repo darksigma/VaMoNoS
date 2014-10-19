@@ -122,8 +122,17 @@ vaccineTimes = {
 
 def foo():
     client = TwilioRestClient(os.environ.get('TWILIO_ACCOUNT_SID', None), os.environ.get('TWILIO_AUTH_TOKEN', None))
-    print(time.ctime())
-    #message = client.messages.create(to="+17034590011", from_="+14088053907", body="Hello there!")
+    for number in db:
+        needed = []
+        for vaccine in vaccineTimes: 
+            if (datetime.datetime.now() - db[number]["dob"]) >= vaccineTimes[vaccine] and db[number][vaccine] == 0:
+                needed.append(vaccine.upper())
+        if len(needed) > 0:
+            body = "Your child is due for the following vaccines: "
+            for need in needed:
+                body += need.upper() + ", "
+            body = body[:-2]
+            message = client.messages.create(to="+17034590011", from_="+14088053907", body=body)
     threading.Timer(10, foo).start()
 
 foo()

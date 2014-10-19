@@ -17,8 +17,8 @@ def info(vacData, times):
     for vaccine in vacData:
         if type(vacData[vaccine]) is datetime.datetime and vaccine != "dob":
             dateTaken = str(vacData[vaccine].month) + "/" + str(vacData[vaccine].day) + "/" + str(vacData[vaccine].year)
-            statement += vaccine.upper() + ": " + dateTaken + "\r\n"
-    statement += "\n"
+            statement += vaccine.upper() + ": " + dateTaken + ",\r\n"
+    statement += ";\n"
     statement += "You are due for: \r\n"
     for vaccine in times: 
         if (datetime.datetime.now() - vacData["dob"]) >= times[vaccine] and vacData[vaccine] == 0:
