@@ -8,3 +8,6 @@ def confirmationMsg(name, dob, zipcode):
 	day = dob.day
 	birthday = str(month) + "/" + str(day) + "/" + str(year) 
 	return "You have successfully registered " + name + " born on " + birthday + " living in the zipcode area " + zipcode + "."
+
+def responseFromVaccine(vaccine):
+	return "You have successfully indicated that your child has received the " + vaccine.upper() + " vaccination."

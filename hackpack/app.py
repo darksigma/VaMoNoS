@@ -19,6 +19,18 @@ app.config.from_pyfile('local_settings.py')
 
 db = {}
 
+vaccineCode = {
+    "9e4f":"bcg",
+    "3ifk":"hepb1",
+    "36dg":"hepb2",
+    "eijl":"hepb3",
+    "q52y":"polio1",
+    "u0sv":"polio2",
+    "26s2":"dtp1",
+    "qe10":"dtp2",
+    }   
+
+
 def foo():
     client = TwilioRestClient(os.environ.get('TWILIO_ACCOUNT_SID', None), os.environ.get('TWILIO_AUTH_TOKEN', None))
     print(time.ctime())
@@ -101,6 +113,9 @@ def sms():
                 "hpv3":0,
             }
             response.sms(helper.confirmationMsg(name, dob, zipcode))
+    elif body in vaccineCode:
+        db[from_number][vaccineCode[body]] = 1
+        response.sms(responseFromVaccine(vaccineCode[body])) 
     else:
         response.sms("Error: Ill-formed Submission")
         
