@@ -19,6 +19,52 @@ app.config.from_pyfile('local_settings.py')
 
 db = {}
 
+db["+16172099765"] = {
+                "name":"Santa Claus",
+                "dob":datetime.datetime(2014, 7, 05),
+                "zipcode":"02139",
+                "bcg":1,
+                "hepb1":1,
+                "hepb2":1,
+                "hepb3":0,
+                "polio1":1,
+                "polio2":1,
+                "polio3":1,
+                "polio4":0,
+                "polio5":0,
+                "polio6":0,
+                "polio7":0,
+                "polio8":0,
+                "dtp1":0,
+                "dtp2":0,
+                "dtp3":0,
+                "dtp4":0,
+                "dtp5":0,
+                "tdap":0,
+                "hib1":0,
+                "hib2":0,
+                "hib3":0,
+                "hib4":0,
+                "pcv1":1,
+                "pcv2":1,
+                "pcv3":0,
+                "pcv4":0,
+                "rv1":1,
+                "rv2":1,
+                "rv3":0,
+                "measles":0,
+                "mmr1":0,
+                "mmr2":0,
+                "var1":0,
+                "var2":0,
+                "hepa1":0,
+                "hepa2":0,
+                "typhoid":0,
+                "hpv1":0,
+                "hpv2":0,
+                "hpv3":0,
+            }
+
 vaccineCode = {
     "9e4f":"bcg",
     "3ifk":"hepb1",
@@ -28,7 +74,7 @@ vaccineCode = {
     "u0sv":"polio2",
     "26s2":"dtp1",
     "qe10":"dtp2",
-    }   
+    }
 
 
 def foo():
